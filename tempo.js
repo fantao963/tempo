@@ -87,10 +87,12 @@ var Tempo = (function (tempo) {
         },
 
         getElement: function (template, html) {
-            if (utils.equalsIgnoreCase(template.tagName, 'tr')) {
+            
+            if (utils.equalsIgnoreCase(template.tagName, 'tr')) {          
+                template.innerHTML = "";            
                 // Wrapping to get around read-only innerHTML
                 var el = document.createElement('div');
-                el.innerHTML = '<table><tbody>' + html + '</tbody></table>';
+                el.innerHTML = '<table><tbody>' + template.outerHTML.toString().replace(/(<\/TR>)|(<\/tr>)$/, html)+"</TR>" + '</tbody></table>';
                 var depth = 3;
                 while (depth--) {
                     el = el.lastChild;
@@ -401,7 +403,7 @@ var Tempo = (function (tempo) {
 
                         var r = new Renderer(t);
                         r.render(eval('i.' + nested));
-                        // }
+                    // }
                     }
                 }
 
